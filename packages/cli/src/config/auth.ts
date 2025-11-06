@@ -36,5 +36,17 @@ export function validateAuthMethod(authMethod: string): string | null {
     return null;
   }
 
+  if (authMethod === AuthType.USE_XAI) {
+    const hasXaiApiKey = !!process.env['XAI_API_KEY'];
+    if (!hasXaiApiKey) {
+      return (
+        'When using xAI, you must specify the XAI_API_KEY environment variable.\n' +
+        'Get your API key from https://console.x.ai/ and set it in your environment.\n' +
+        'Update your environment and try again (no reload needed if using .env)!'
+      );
+    }
+    return null;
+  }
+
   return 'Invalid auth method selected.';
 }

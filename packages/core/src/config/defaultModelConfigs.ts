@@ -53,6 +53,37 @@ export const DEFAULT_MODEL_CONFIGS: ModelConfigServiceConfig = {
         model: 'gemini-2.5-flash-lite',
       },
     },
+    // xAI Grok models
+    'grok-2-1212': {
+      extends: 'base',
+      modelConfig: {
+        model: 'grok-2-1212',
+        generateContentConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 8192,
+        },
+      },
+    },
+    'grok-vision-beta': {
+      extends: 'base',
+      modelConfig: {
+        model: 'grok-vision-beta',
+        generateContentConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 8192,
+        },
+      },
+    },
+    'grok-4-fast-reasoning': {
+      extends: 'base',
+      modelConfig: {
+        model: 'grok-4-fast-reasoning',
+        generateContentConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 8192,
+        },
+      },
+    },
     classifier: {
       extends: 'base',
       modelConfig: {
