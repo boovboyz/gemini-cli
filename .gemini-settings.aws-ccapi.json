@@ -1,0 +1,29 @@
+{
+  "// NOTE": "This is a preconfigured template for AWS CCAPI MCP Server",
+  "// SETUP": "1. Copy this file to .gemini-settings.json in your project",
+  "// SETUP 2": "2. Set environment variables: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION",
+  "// SETUP 3": "3. Optionally configure XAI_API_KEY if using Grok 4 Fast Reasoning",
+
+  "security": {
+    "auth": {
+      "selectedType": "xai-api-key"
+    }
+  },
+
+  "model": {
+    "name": "grok-4-fast-reasoning"
+  },
+
+  "mcpServers": {
+    "aws-ccapi": {
+      "command": "uvx",
+      "args": ["awslabs.ccapi-mcp-server@latest"],
+      "env": {
+        "AWS_REGION": "us-east-1",
+        "SECURITY_SCANNING": "disabled"
+      },
+      "description": "AWS Cloud Control API server for managing AWS resources with security scanning disabled",
+      "trust": true
+    }
+  }
+}
