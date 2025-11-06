@@ -1,7 +1,7 @@
-# Using xAI Grok with Gemini CLI
+# Using xAI Grok 4 Fast Reasoning with Gemini CLI
 
-This guide explains how to use xAI's Grok models (including Grok 4 Fast
-Reasoning) with the Gemini CLI.
+This guide explains how to use xAI's Grok 4 Fast Reasoning model with full tool
+calling support in the Gemini CLI.
 
 ## Prerequisites
 
@@ -50,34 +50,33 @@ update your `.gemini-settings.json` file:
     "auth": {
       "selectedType": "xai-api-key"
     }
+  },
+  "model": {
+    "name": "grok-4-fast-reasoning"
   }
 }
 ```
 
-## Available Grok Models
+## Available Model
 
-The following xAI Grok models are available:
+The following xAI Grok model is available:
 
-- **grok-2-1212** - The latest Grok 2 model (default)
-- **grok-vision-beta** - Grok with vision capabilities
-- **grok-4-fast-reasoning** - Grok 4 with fast reasoning capabilities
+- **grok-4-fast-reasoning** - Grok 4 with fast reasoning and full tool calling
+  support
 
 ## Usage Examples
 
-### Using with Command Line Flag
+### Basic Usage
 
 ```bash
 # Use Grok 4 Fast Reasoning
 gemini --model grok-4-fast-reasoning "Explain quantum computing"
 
-# Use Grok 2
-gemini --model grok-2-1212 "What is the capital of France?"
-
-# Use Grok Vision (beta)
-gemini --model grok-vision-beta "Describe this image"
+# Interactive session
+gemini --model grok-4-fast-reasoning
 ```
 
-### Using with Settings File
+### With Settings File
 
 Configure the default model in your `.gemini-settings.json`:
 
@@ -100,13 +99,43 @@ Then simply run:
 gemini "Your question here"
 ```
 
-### Interactive Mode
+## Tool Calling Support
 
-Start an interactive session with Grok:
+Grok 4 Fast Reasoning supports full tool calling capabilities, allowing the
+model to interact with external tools and functions. The Gemini CLI
+automatically handles tool declarations and executions.
+
+### How Tool Calling Works
+
+1. **Tool Declaration**: Tools are defined with function declarations including
+   name, description, and parameters
+2. **Model Decision**: The model decides when to call tools based on the
+   conversation
+3. **Tool Execution**: The CLI executes the tool and returns results to the
+   model
+4. **Continuation**: The model uses tool results to generate the final response
+
+### Example with Built-in Tools
 
 ```bash
-gemini --model grok-4-fast-reasoning
+# The model can use built-in tools like file operations, web search, etc.
+gemini "Find all JavaScript files in this directory and count them"
+
+# The model will automatically use the appropriate tools:
+# 1. List files (glob tool)
+# 2. Filter JavaScript files
+# 3. Count and report
 ```
+
+### Tool Calling Features
+
+- ✅ **Function Declarations**: Define custom tools with JSON schema parameters
+- ✅ **Automatic Execution**: CLI automatically executes tool calls
+- ✅ **Multi-turn Conversations**: Tools can be called multiple times in a
+  conversation
+- ✅ **Streaming Support**: Tool calls work in both streaming and non-streaming
+  modes
+- ✅ **Error Handling**: Graceful handling of tool execution errors
 
 ## Model Configuration
 
@@ -125,11 +154,12 @@ You can customize model parameters in your `.gemini-settings.json`:
   "modelConfigs": {
     "aliases": {
       "grok-4-fast-reasoning": {
-        "extends": "base",
+        "extends": "chat-base",
         "modelConfig": {
           "model": "grok-4-fast-reasoning",
           "generateContentConfig": {
-            "temperature": 0.7,
+            "temperature": 0,
+            "topP": 1,
             "maxOutputTokens": 8192
           }
         }
@@ -158,28 +188,30 @@ xAI enforces rate limits on API usage. If you encounter rate limit errors:
 3. Check your API usage dashboard at
    [https://console.x.ai/](https://console.x.ai/)
 
-### Model Not Found
+### Tool Execution Errors
 
-If you see a "model not found" error:
+If tools fail to execute:
 
-1. Verify you're using one of the supported model names listed above
-2. Check for typos in the model name
-3. Ensure you're using the latest version of Gemini CLI
+1. Check that the tool parameters are valid
+2. Verify you have necessary permissions (for file operations, etc.)
+3. Review the error message for specific details
 
-## Features and Limitations
+## Features
 
-### Supported Features
+### Fully Supported
 
-- ✅ Text generation
-- ✅ Streaming responses
+- ✅ Text generation with streaming
+- ✅ **Tool/function calling** (full support)
 - ✅ System instructions
 - ✅ Temperature and max token configuration
 - ✅ Multi-turn conversations
+- ✅ Function declarations with JSON schema
+- ✅ Automatic tool execution
+- ✅ Tool result handling
 
 ### Limitations
 
 - ❌ Embedding generation (not supported by xAI)
-- ❌ Tool/function calling (not yet implemented)
 - ⚠️ Token counting is estimated (xAI doesn't provide exact token counting)
 
 ## Example Session
@@ -202,24 +234,44 @@ cat > .gemini-settings.json << EOF
 }
 EOF
 
-# Start interactive session
+# Start interactive session with tool calling
 gemini
 
-# Or use directly
-gemini --model grok-4-fast-reasoning "Write a Python function to calculate fibonacci numbers"
+# Example conversation with tools:
+# You: "What files are in this directory?"
+# (Model uses list_files tool)
+# Model: "I found 5 files in the directory: ..."
+
+# You: "Read the package.json file"
+# (Model uses read_file tool)
+# Model: "Here's the content of package.json: ..."
 ```
+
+## Performance Tips
+
+1. **Temperature**: Use `temperature: 0` for more deterministic, focused
+   responses
+2. **Token Limit**: Adjust `maxOutputTokens` based on your needs (default: 8192)
+3. **Tool Selection**: The model automatically selects which tools to use based
+   on context
 
 ## Additional Resources
 
 - [xAI Documentation](https://docs.x.ai/)
 - [xAI API Console](https://console.x.ai/)
 - [Gemini CLI Documentation](https://github.com/google-gemini/gemini-cli)
+- [Tool Calling Guide](https://docs.x.ai/docs/guides/function-calling)
 
 ## Support
 
 For issues related to:
 
-- **xAI API**: Contact xAI support at
+- **xAI API or Grok models**: Contact xAI support at
   [https://console.x.ai/](https://console.x.ai/)
-- **Gemini CLI**: Open an issue at
+- **Gemini CLI integration**: Open an issue at
   [https://github.com/google-gemini/gemini-cli/issues](https://github.com/google-gemini/gemini-cli/issues)
+
+## Changelog
+
+- **v1.1**: Added full tool calling support for Grok 4 Fast Reasoning
+- **v1.0**: Initial xAI Grok integration with basic text generation

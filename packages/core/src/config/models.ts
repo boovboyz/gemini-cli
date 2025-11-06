@@ -12,10 +12,8 @@ export const DEFAULT_GEMINI_MODEL_AUTO = 'auto';
 
 export const DEFAULT_GEMINI_EMBEDDING_MODEL = 'gemini-embedding-001';
 
-// xAI Grok models
-export const DEFAULT_GROK_MODEL = 'grok-2-1212';
-export const DEFAULT_GROK_VISION_MODEL = 'grok-vision-beta';
-export const DEFAULT_GROK_FAST_REASONING_MODEL = 'grok-4-fast-reasoning';
+// xAI Grok model
+export const DEFAULT_GROK_MODEL = 'grok-4-fast-reasoning';
 
 // Cap the thinking at 8192 to prevent run-away thinking loops.
 export const DEFAULT_THINKING_MODE = 8192;
