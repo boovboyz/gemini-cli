@@ -19,7 +19,7 @@ with this configuration (via `uvx`).
 
 ## Configuration
 
-Add this to your `.gemini-settings.json` file:
+Add this to your `.gemini/settings.json` file:
 
 ```json
 {
@@ -196,7 +196,7 @@ gemini "Generate a CloudFormation template for an EC2 instance with type t3.micr
 
 ## Complete Configuration Example
 
-Here's a complete `.gemini-settings.json` with both xAI Grok and AWS CCAPI MCP:
+Here's a complete `.gemini/settings.json` with both xAI Grok and AWS CCAPI MCP:
 
 ```json
 {

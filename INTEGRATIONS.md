@@ -71,7 +71,8 @@ export AWS_ACCESS_KEY_ID="your-key"
 export AWS_SECRET_ACCESS_KEY="your-secret"
 export AWS_REGION="us-east-1"
 
-cp .gemini-settings.aws-ccapi.json .gemini-settings.json
+mkdir -p .gemini
+cp .gemini-settings.aws-ccapi.json .gemini/settings.json
 ```
 
 **Example Commands**:

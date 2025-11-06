@@ -11,9 +11,9 @@ echo "AWS CCAPI MCP Server Setup for Gemini CLI"
 echo "========================================"
 echo ""
 
-# Check if .gemini-settings.json already exists
-if [ -f ".gemini-settings.json" ]; then
-    echo "⚠️  .gemini-settings.json already exists!"
+# Check if .gemini/settings.json already exists
+if [ -f ".gemini/settings.json" ]; then
+    echo "⚠️  .gemini/settings.json already exists!"
     read -p "Do you want to merge AWS CCAPI configuration into it? (y/n) " -n 1 -r
     echo
     if [[ ! $REPLY =~ ^[Yy]$ ]]; then
@@ -70,8 +70,11 @@ fi
 
 # Create or update configuration
 if [ "$MERGE_MODE" = false ]; then
+    # Create .gemini directory if it doesn't exist
+    mkdir -p .gemini
+
     # Create new configuration
-    cat > .gemini-settings.json <<EOF
+    cat > .gemini/settings.json <<EOF
 {
   "security": {
     "auth": {
@@ -95,7 +98,7 @@ if [ "$MERGE_MODE" = false ]; then
   }
 }
 EOF
-    echo "✅ Created .gemini-settings.json"
+    echo "✅ Created .gemini/settings.json"
 else
     echo "⚠️  Merge mode not implemented yet. Please manually add from .gemini-settings.aws-ccapi.json"
 fi

@@ -1,8 +1,9 @@
 {
   "// NOTE": "This is a preconfigured template for AWS CCAPI MCP Server",
-  "// SETUP": "1. Copy this file to .gemini-settings.json in your project",
-  "// SETUP 2": "2. Set environment variables: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION",
-  "// SETUP 3": "3. Optionally configure XAI_API_KEY if using Grok 4 Fast Reasoning",
+  "// SETUP": "1. Create .gemini directory: mkdir -p .gemini",
+  "// SETUP 2": "2. Copy this file to .gemini/settings.json in your project",
+  "// SETUP 3": "3. Set environment variables: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION",
+  "// SETUP 4": "4. Optionally configure XAI_API_KEY if using Grok 4 Fast Reasoning",
 
   "security": {
     "auth": {

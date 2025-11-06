@@ -20,7 +20,8 @@ gemini "List my EC2 instances"
 ### Step 1: Copy Configuration
 
 ```bash
-cp .gemini-settings.aws-ccapi.json .gemini-settings.json
+mkdir -p .gemini
+cp .gemini-settings.aws-ccapi.json .gemini/settings.json
 ```
 
 ### Step 2: Set Environment Variables
@@ -91,12 +92,16 @@ us-east-1** - Change in configuration if needed
 - **You are responsible** for ensuring secure resource configurations
 - Recommended for development/testing only
 
-To enable security scanning, edit `.gemini-settings.json`:
+To enable security scanning, edit `.gemini/settings.json`:
 
 ```json
 {
-  "env": {
-    "SECURITY_SCANNING": "enabled"
+  "mcpServers": {
+    "aws-ccapi": {
+      "env": {
+        "SECURITY_SCANNING": "enabled"
+      }
+    }
   }
 }
 ```
@@ -142,11 +147,15 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 To explore AWS resources without modification risk:
 
-Edit `.gemini-settings.json`:
+Edit `.gemini/settings.json`:
 
 ```json
 {
-  "args": ["awslabs.ccapi-mcp-server@latest", "--readonly"]
+  "mcpServers": {
+    "aws-ccapi": {
+      "args": ["awslabs.ccapi-mcp-server@latest", "--readonly"]
+    }
+  }
 }
 ```
 

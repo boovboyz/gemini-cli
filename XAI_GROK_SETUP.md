@@ -41,8 +41,13 @@ XAI_API_KEY=your-api-key-here
 
 ### 3. Configure Gemini CLI Settings
 
-You need to configure Gemini CLI to use the xAI authentication type. Create or
-update your `.gemini-settings.json` file:
+You need to configure Gemini CLI to use the xAI authentication type. Create the
+`.gemini` directory if it doesn't exist, then create or update your
+`.gemini/settings.json` file:
+
+```bash
+mkdir -p .gemini
+```
 
 ```json
 {
@@ -78,7 +83,7 @@ gemini --model grok-4-fast-reasoning
 
 ### With Settings File
 
-Configure the default model in your `.gemini-settings.json`:
+Configure the default model in your `.gemini/settings.json`:
 
 ```json
 {
@@ -139,7 +144,7 @@ gemini "Find all JavaScript files in this directory and count them"
 
 ## Model Configuration
 
-You can customize model parameters in your `.gemini-settings.json`:
+You can customize model parameters in your `.gemini/settings.json`:
 
 ```json
 {
@@ -176,7 +181,7 @@ You can customize model parameters in your `.gemini-settings.json`:
 If you see an error about missing `XAI_API_KEY`:
 
 1. Verify the environment variable is set: `echo $XAI_API_KEY`
-2. Check that your `.gemini-settings.json` has `"selectedType": "xai-api-key"`
+2. Check that your `.gemini/settings.json` has `"selectedType": "xai-api-key"`
 3. Restart your terminal or reload your shell configuration
 
 ### API Rate Limits
@@ -221,7 +226,8 @@ If tools fail to execute:
 export XAI_API_KEY="xai-..."
 
 # Configure settings
-cat > .gemini-settings.json << EOF
+mkdir -p .gemini
+cat > .gemini/settings.json << EOF
 {
   "security": {
     "auth": {
